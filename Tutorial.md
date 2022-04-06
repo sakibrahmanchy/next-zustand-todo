@@ -51,6 +51,8 @@ As we can, see, there are four main components:
 
 So start configuring our app by going to `pages/index.js` and replacing the existing content with the follwoing:
 
+`pages/index.js`
+
 ```
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
@@ -78,6 +80,8 @@ export default Home;
 As we can see from the code, we are starting to design our app structure, we need to build the individual components that will shape our app structure.
 
 Before building the component, lets change our app title and some meta tags by going into `_app.js` and replace the content with the following:
+
+`pages/_app.js`
 
 ```
 import "../styles/globals.css";
@@ -121,7 +125,7 @@ const TopBar = () => {
   return (
     <div className={styles.topbar}>
       <h4 className={styles.logo}>My Todo App</h4>
-      <input className={styles.search} type="text" />
+      <input className={styles.search} type="text" placeholder="Search" />
     </div>
   );
 };
@@ -160,3 +164,40 @@ Also create the relevant css file and put following styles in there:
   cursor: pointer;
 }
 ```
+
+Now we want to import this topbar in our main page (`index.tsx`).
+
+```
+import TopBar from "../components/topbar/topbar";
+```
+
+Okay, now we want to uncomment the TopBar in `line 8` of `index.tsx` as the component is imported and ready to test.
+
+Lets run our app with `npm run dev` and we can see that the app looks kinda broken, but the topbar is there.
+
+<img src="https://raw.githubusercontent.com/sakibrahmanchy/next-zustand-todo/main/screenshots/broken-design-topbar.png">
+
+To fix this design go to `styles/Home.module.css` and replace the content with the following:
+
+`styles/Home.module.css`
+
+```
+.main {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  flex-grow: 0.5;
+  padding-top: 20px;
+  background-color: var(--color-accent);
+}
+
+.todo {
+  padding: 20px;
+  flex-grow: 4;
+}
+
+```
+
+As we have added the designs for our main, sidebar and the todo list and input section, if we check our browser, its an acceptable design atlast:
