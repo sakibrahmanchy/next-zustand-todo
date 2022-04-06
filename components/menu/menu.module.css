@@ -1,0 +1,28 @@
+.menu {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.listItem {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.listItem:hover {
+  background: white;
+}
+
+.icon {
+  padding: 10px;
+}
+
+.listItem__selected {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.listItem__selected:hover {
+  background-color: var(--color-primary);
+  color: white;
+}

@@ -14,3 +14,8 @@ a {
 * {
   box-sizing: border-box;
 }
+
+:root {
+  --color-primary: #0078d7;
+  --color-accent: #edebe9;
+}

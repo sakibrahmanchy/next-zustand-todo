@@ -3,9 +3,13 @@ import Menu from "../components/menu/menu";
 import TaskInput from "../components/taskinput/taskinput";
 import TaskList from "../components/tasklist/tasklist";
 import TopBar from "../components/topbar/topbar";
+import useTaskStore from "../store/task.store";
 import styles from "../styles/Home.module.css";
 
-const Home: NextPage = () => {
+const Completed: NextPage = () => {
+  const completedTasks = useTaskStore((state) =>
+    state.tasks.filter(({ completed }) => completed)
+  );
   return (
     <div className={styles.container}>
       <TopBar />
@@ -14,13 +18,13 @@ const Home: NextPage = () => {
           <Menu />
         </div>
         <div className={styles.todo}>
-          <h2>All Tasks</h2>
+          <h2>Completed Tasks</h2>
           <TaskInput />
-          <TaskList />
+          <TaskList tasks={completedTasks} />
         </div>
       </main>
     </div>
   );
 };
 
-export default Home;
+export default Completed;
