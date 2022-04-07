@@ -1,0 +1,24 @@
+.topbar {
+  width: 100%;
+  background-color: var(--color-primary);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  height: 60px;
+  justify-items: center;
+  align-items: center;
+}
+
+.logo {
+  color: white;
+  text-decoration: wavy;
+}
+
+.search {
+  padding: 8px;
+  width: 300px;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+}
