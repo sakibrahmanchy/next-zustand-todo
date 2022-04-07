@@ -200,4 +200,166 @@ To fix this design go to `styles/Home.module.css` and replace the content with t
 
 ```
 
-As we have added the designs for our main, sidebar and the todo list and input section, if we check our browser, its an acceptable design atlast:
+As we have added the designs for our main, sidebar and the todo list and input section, if we check our browser, its an acceptable design at last:
+
+<img src="https://raw.githubusercontent.com/sakibrahmanchy/next-zustand-todo/main/screenshots/basic-design.png">
+
+Okay. Now lets go ahead and add designs for our `menu` component.
+At first, we will define couple of types for our menu and menu-items:
+
+```
+type MenuItemKey = "all" | "completed" | "important";
+
+export type MenuItem = {
+  name: string; // Name of Menu Item
+  icon?: string; // Icon for the Menu Item
+  url?: string; // Url of the menu item
+  key: MenuItemKey; // Unique Key For the menu item, three types - all, completed, important
+};
+
+export type MenuProps = {
+  items?: MenuItem[];
+};
+```
+
+Now we want to iterate through our menu items and render the menu. We also want to make sure when we click a menu link it takes us to the relevant url for which we will use `Next Link`. Lets add the following contents in the `components/menu/menu.tsx` file:
+
+`components/menu/menu.tsx`
+
+```
+import Link from "next/link";
+import styles from "./menu.module.css";
+
+type MenuItemKey = "all" | "completed" | "important";
+
+export type MenuItem = {
+  name: string;
+  icon?: string;
+  url?: string;
+  key: MenuItemKey;
+};
+
+export type MenuProps = {
+  items?: MenuItem[];
+};
+
+const DEFAULT_MENU = [
+  {
+    name: "All",
+    key: "all",
+    icon: "&#x2638;",
+    url: "/",
+  },
+  {
+    name: "Important",
+    icon: "&#x2605;",
+    key: "important",
+    url: "/important",
+  },
+  {
+    name: "Completed",
+    key: "completed",
+    icon: "&#x2713;",
+    url: "/completed",
+  },
+] as MenuItem[];
+
+const Menu: React.FC<MenuProps> = ({ items = DEFAULT_MENU }) => {
+  return (
+    <ul className={styles.menu}>
+      {items.map(({ name, icon = "", url = null, key = "" }, index) =>
+        url ? (
+          <Link key={key} href={url} passHref>
+            <li key={key} className={`${styles.listItem}`}>
+              <span
+                className={styles.icon}
+                dangerouslySetInnerHTML={{ __html: icon }}
+              />
+              {name}
+            </li>
+          </Link>
+        ) : (
+          <li key={key} className={styles.listItem}>
+            <span className={styles.icon}>
+              <i dangerouslySetInnerHTML={{ __html: icon }}></i>
+            </span>
+            {name}
+          </li>
+        )
+      )}
+    </ul>
+  );
+};
+
+export default Menu;
+```
+
+Also relevant css for the menu:
+
+`components/menu/menu.module.css`
+
+```
+.menu {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.listItem {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.listItem:hover {
+  background: white;
+}
+
+.icon {
+  padding: 10px;
+}
+
+.listItem__selected {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.listItem__selected:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+```
+
+Now we want to import the Menu component in `pages/index.tsx` and use it:
+
+`pages/index.tsx`
+
+```
+import type { NextPage } from "next";
+import styles from "../styles/Home.module.css";
+import TopBar from "../components/topbar/topbar";
+import Menu from "../components/menu/menu";
+
+const Home: NextPage = () => {
+  return (
+    <div className={styles.container}>
+      <TopBar />
+      <main className={styles.main}>
+        <div className={styles.sidebar}>
+          <Menu />
+        </div>
+        <div className={styles.todo}>
+          <h2>All Tasks</h2>
+          {/* <TaskInput /> */}
+          {/* <TaskList /> */}
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default Home;
+
+```
+
+Hmm, a lot of code. Here basically we rendered the menu items and added urls to work as their link. Those link wont work yet though. Lets see how does it look in the browser:
