@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import styles from "./taskinput.module.css";
+import useTaskStore from "../../store/task.store";
 
 const TaskInput = () => {
   const [task, setTask] = useState<string>("");
-  const createTask = () => {};
+  const addTask = useTaskStore((state) => state.addTask);
+  const createTask = () => {
+    if (addTask && task) {
+      addTask(task);
+      setTask("");
+    }
+  };
   return (
     <div className={styles.taskInputContainer}>
       <input
