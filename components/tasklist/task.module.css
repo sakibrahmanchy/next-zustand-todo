@@ -79,14 +79,7 @@
   color: var(--color-primary);
 }
 
-.taskListSortItem {
+.taskCount {
   color: var(--color-primary);
-  display: inline;
-  padding: 10px;
-  margin-left: 10px;
-  padding-bottom: 30px;
-}
-
-.taskListSort {
   padding: 5px;
 }

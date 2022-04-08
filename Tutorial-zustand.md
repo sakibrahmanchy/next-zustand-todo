@@ -275,13 +275,7 @@ const TaskList: React.FC<TaskProps> = () => {
   return (
     <ul className={styles.taskList}>
       <li className={`${styles.taskListItem} ${styles.taskCount}`}>
-        <span>
-          Sort by &nbsp;
-          <select className={styles.taskListSort}>
-            <option value="date">Date</option>
-            <option value="name">Name</option>
-          </select>
-        </span>
+        <i>Total: {currentTasks.length}</i>
       </li>
       {tasks.map(
         ({ id, name, completed = false, important, created_at }, index) => (
@@ -328,36 +322,90 @@ Also we will put the following css to design the list in
 `taskinput.module.css` in the same directory:
 
 ```css
-.taskInputContainer {
-  background-color: var(--color-accent);
-  width: 100%;
-  height: 180px;
-  padding: 20px;
+.taskList {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  padding-top: 40px;
 }
 
-.taskInput {
-  border: none;
-  border-radius: 4px;
+.taskListItem {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid;
+  display: flex;
+  justify-content: space-between;
+}
+
+.taskListItem:hover {
+  background: white;
+}
+
+.taskListItem__complete {
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+  color: var(--color-primary);
+  /* text-decoration: line-through; */
+}
+
+@keyframes strike {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+.taskListItem__complete {
+  position: relative;
+}
+.taskListItem__complete::after {
+  content: " ";
+  position: absolute;
+  top: 40%;
+  left: 0;
   width: 100%;
-  height: 100px;
-  font-size: 20px;
+  height: 2px;
+  background: var(--color-primary);
+  animation-name: strike;
+  animation-duration: 0.2s;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.icon {
   padding: 10px;
 }
 
-.taskInputButton {
-  background-color: var(--color-primary);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  float: right;
-  height: 40px;
-  width: 100px;
-  margin-top: 10px;
-  cursor: pointer;
+.checkBox {
+  height: 20px;
+  width: 30px;
 }
 
-.taskInputButton:hover {
-  background-color: #84aedd;
+.taskListItem__favorite {
+  float: right;
+  margin-right: 20px;
+  font-size: 21px;
+}
+
+.taskListItem__remove {
+  float: right;
+  margin-right: 20px;
+  font-size: 21px;
+  color: red;
+}
+
+.filler {
+  flex-grow: 1;
+}
+
+.taskListItem__important {
+  color: var(--color-primary);
+}
+
+.taskCount {
+  color: var(--color-primary);
+  padding: 5px;
 }
 ```
 
@@ -473,13 +521,7 @@ const TaskList: React.FC<TaskProps> = ({ tasks = null }) => {
   return (
     <ul className={styles.taskList}>
       <li className={`${styles.taskListItem} ${styles.taskCount}`}>
-        <span>
-          Sort by &nbsp;
-          <select className={styles.taskListSort}>
-            <option value="date">Date</option>
-            <option value="name">Name</option>
-          </select>
-        </span>
+        Total: {currentTasks.length}
       </li>
       {currentTasks.map(
         ({ id, name, completed = false, important = false }, index) => (
@@ -656,7 +698,7 @@ export default Search;
 
 In this page we want to take a query from the browser url (which will be pushed to router history, when user types it in the search bar) and filter all tasks by that query. We want to also make sure to do this in the search bar itself. Lets go to `components\topbar\topbar.tsx` and add this functionality on input change handler:
 
-```jsx
+```js
 const TopBar = () => {
   const router = useRouter();
   const { search } = router.query;

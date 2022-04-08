@@ -26,13 +26,7 @@ const TaskList: React.FC<TaskProps> = ({ tasks = null }) => {
   return (
     <ul className={styles.taskList}>
       <li className={`${styles.taskListItem} ${styles.taskCount}`}>
-        <span>
-          Sort by &nbsp;
-          <select className={styles.taskListSort}>
-            <option value="date">Date</option>
-            <option value="name">Name</option>
-          </select>
-        </span>
+        <i>Total: {currentTasks.length}</i>
       </li>
       {currentTasks.map(
         ({ id, name, completed = false, important = false }, index) => (
