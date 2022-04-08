@@ -1,0 +1,92 @@
+.taskList {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  padding-top: 40px;
+}
+
+.taskListItem {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid;
+  display: flex;
+  justify-content: space-between;
+}
+
+.taskListItem:hover {
+  background: white;
+}
+
+.taskListItem__complete {
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+  color: var(--color-primary);
+  /* text-decoration: line-through; */
+}
+
+@keyframes strike {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+.taskListItem__complete {
+  position: relative;
+}
+.taskListItem__complete::after {
+  content: " ";
+  position: absolute;
+  top: 40%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-primary);
+  animation-name: strike;
+  animation-duration: 0.2s;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.icon {
+  padding: 10px;
+}
+
+.checkBox {
+  height: 20px;
+  width: 30px;
+}
+
+.taskListItem__favorite {
+  float: right;
+  margin-right: 20px;
+  font-size: 21px;
+}
+
+.taskListItem__remove {
+  float: right;
+  margin-right: 20px;
+  font-size: 21px;
+  color: red;
+}
+
+.filler {
+  flex-grow: 1;
+}
+
+.taskListItem__important {
+  color: var(--color-primary);
+}
+
+.taskListSortItem {
+  color: var(--color-primary);
+  display: inline;
+  padding: 10px;
+  margin-left: 10px;
+  padding-bottom: 30px;
+}
+
+.taskListSort {
+  padding: 5px;
+}
