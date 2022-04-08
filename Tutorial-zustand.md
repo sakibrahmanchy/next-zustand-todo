@@ -734,3 +734,5 @@ The Zustand library, in summary, is one of the smallest state management librari
 Redux DevTools, Persist, etc. are all supported by Zustand, which gives access to the store outside of React.
 
 Accordingly, Zustand appears to be a good choice as a state manager. The library's simplicity makes it an excellent choice for React state management newbies.
+
+P.S: For complete code, visit here: https://github.com/sakibrahmanchy/next-zustand-todo/tree/completed
